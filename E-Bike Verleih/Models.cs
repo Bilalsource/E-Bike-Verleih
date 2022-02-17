@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace E_Bike_Verleih.Models
 {
@@ -19,38 +18,62 @@ namespace E_Bike_Verleih.Models
             • HouseNumber vom Typ string
             • PostalCode vom Typ string
                
-
         */
-        private string FirstName { get; set; }
-        private string LastName { get; set; }   
-        private bool AMLicense { get; set; }
-        private string Number { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public bool AMLicense { get; set; }
+        public string Number { get; set; }
         // International Bank Account Number
-        private string IBAN { get; set; }
+        public string IBAN { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
         public string PostalCode { get; set; }
-
+     
         public Customer() { }
 
-        public Customer(string firstName, string lastName, string city, string street, string houseNumber, string postalCode)
+        public Customer(string firstName, string lastName, string number, bool amLicense, string city, string street, string houseNumber, string postalCode)
         {
             FirstName = firstName;
             LastName = lastName;
+            AMLicense = amLicense;
+            Number = number;
             City = city;
             Street = street;
             HouseNumber = houseNumber;
             PostalCode = postalCode;
+
         }
 
         // overriden der toString()
-        public override string ToString() => "$Nachname: {LastName}, Vorname: {FirstName}, Stadt: {city}, Postleitzahl: {PostalCode} , Strasse: {street}, Nr. {houseNumber}";
-
+        public override string ToString()
+        {
+            if (AMLicense == true)
+            {
+                return "Nachname:"+ LastName+", Vorname: "+FirstName+", AM-Führerschein: Vorhanden, "+"Stadt: "+City+", Postleitzahl: "+PostalCode+" , Strasse: "+Street+", Nr. "+HouseNumber+" ";
+            }
+            else
+            {
+                return "Nachname:" + LastName + ", Vorname: " + FirstName + ", AM-Führerschein: Nicht vorhanden, " + "Stadt: " + City + ", Postleitzahl: " + PostalCode + " , Strasse: " + Street + ", Nr. " + HouseNumber + " ";
+            }
+        }
     }
 
     public class Order
     {
+        /*
+        Die Klasse Order enthält die folgenden Properties
+          
+            • Customer vom Typ Customer
+            • EBikeCategory vom Typ EBikeCategory
+            • EBike vom Typ EBike
+            • BeginDate vom Typ DateTime 
+            • EndDate vom Typ DateTime
+            • TotalValue vom Typ decimal
+                         
+        */
+
+        private Customer Customer { get; set; }
         private EBikeCategory EBikeCategory { get; set; }
         private EBike EBike { get; set; }
         private DateTime BeginDate { get; set; }
@@ -79,18 +102,20 @@ namespace E_Bike_Verleih.Models
 
         public Order() { }
 
-        public Order(EBikeCategory eBikeCategory, EBike eBike, DateTime beginDate, DateTime endDate)
+        public Order(Customer customer, EBikeCategory eBikeCategory, EBike eBike, DateTime beginDate, DateTime endDate)
         {
+            Customer = customer;
             EBikeCategory = eBikeCategory;
             EBike = eBike;
             BeginDate = beginDate;
             EndDate = endDate;
         }
 
-        public override string ToString() => "$Name: {Name}, Beginndatum: {BeginDate}, Enddatum: {EndDate}";
+        public override string ToString() => "$Vorname des Kunden: {Customer.Firstname}, Nachname des Kunden des Kunden: {Customer.Lastname}, Beginndatum: {BeginDate}, Enddatum: {EndDate}";
 
     }
 
+    //TODO: VERERBUNG ERGÄNZEN
     public class EBikeCategory 
     {     
         private string Name { get; set; }
@@ -98,9 +123,11 @@ namespace E_Bike_Verleih.Models
         public decimal WeeklyFee {  get; private set; }
 
         public decimal DailyFee { get; private set; }
+
+        public int maxSpeed { get; set; }
     }
 
-    public class EBike
+    public class EBike : EBikeCategory
     {
         private string Model { get; set; }
 

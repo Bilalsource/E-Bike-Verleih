@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Customer>
+    <FirstName>Justin</FirstName>
+    <LastName>Evangelou</LastName>
+    <AMLicense>false</AMLicense>
+    <Number>014101511</Number>
+    <City>Velbert Langenberg</City>
+    <Street>Kamper Straße</Street>
+    <HouseNumber>20</HouseNumber>
+    <PostalCode>42555</PostalCode>
+  </Customer>
+  <Customer>
+    <FirstName>Bilal</FirstName>
+    <LastName>El-Awad</LastName>
+    <AMLicense>true</AMLicense>
+    <Number>017693209151</Number>
+    <City>Velbert Langenberg</City>
+    <Street>Kamper Straße</Street>
+    <HouseNumber>20</HouseNumber>
+    <PostalCode>42555</PostalCode>
+  </Customer>
+  <Customer>
+    <FirstName>Dominik</FirstName>
+    <LastName>Evangelou </LastName>
+    <AMLicense>true</AMLicense>
+    <Number>01769258147</Number>
+    <City>Velbert Langenberg</City>
+    <Street>Kamper Straße</Street>
+    <HouseNumber>20</HouseNumber>
+    <PostalCode>42555</PostalCode>
+  </Customer>
+</ArrayOfCustomer>
