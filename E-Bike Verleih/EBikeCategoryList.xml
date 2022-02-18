@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfEBikeCategory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <EBikeCategory>
+    <CategoryName>City Bike</CategoryName>
+    <WeeklyFee>30</WeeklyFee>
+    <DailyFee>3</DailyFee>
+    <MaxSpeed>18</MaxSpeed>
+    <EBikes />
+  </EBikeCategory>
+  <EBikeCategory>
+    <CategoryName>Suzuki Xxtreme</CategoryName>
+    <WeeklyFee>30</WeeklyFee>
+    <DailyFee>3</DailyFee>
+    <MaxSpeed>25</MaxSpeed>
+    <EBikes>
+      <EBike>
+        <Model>Race Xxtreme</Model>
+        <Manufacturer>Suzuki</Manufacturer>
+        <Power>15</Power>
+      </EBike>
+    </EBikes>
+  </EBikeCategory>
+</ArrayOfEBikeCategory>

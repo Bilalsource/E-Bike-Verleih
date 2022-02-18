@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace E_Bike_Verleih.Models
 {
@@ -73,14 +73,14 @@ namespace E_Bike_Verleih.Models
                          
         */
 
-        private Customer Customer { get; set; }
-        private EBikeCategory EBikeCategory { get; set; }
-        private EBike EBike { get; set; }
-        private DateTime BeginDate { get; set; }
-        private DateTime EndDate { get; set; }
+        public Customer Customer { get; set; }
+        public EBikeCategory EBikeCategory { get; set; }
+        public EBike EBike { get; set; }
+        public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
         
         private decimal _TotalValue;
-        private decimal TotalValue
+        public decimal TotalValue
         {
             get
             {
@@ -115,27 +115,56 @@ namespace E_Bike_Verleih.Models
 
     }
 
-    //TODO: VERERBUNG ERGÄNZEN
-    public class EBikeCategory 
-    {     
-        private string Name { get; set; }
 
-        public decimal WeeklyFee {  get; private set; }
+    public class EBikeCategory
+    {
+        public string CategoryName { get; set; }
 
-        public decimal DailyFee { get; private set; }
+        public decimal WeeklyFee { get; set; }
 
-        public int maxSpeed { get; set; }
+        public decimal DailyFee { get; set; }
+
+        public int MaxSpeed { get; set; }
+
+        public List<EBike> EBikes { get; set; }
+
+        public EBikeCategory() { }
+        public EBikeCategory(string categoryname, decimal weeklyFee, decimal dailyFee, int maxSpeed)
+        {
+            EBikes = new List<EBike>();
+            CategoryName = categoryname;
+            WeeklyFee = weeklyFee;
+            DailyFee = dailyFee;
+            MaxSpeed = maxSpeed;
+        } 
+
+        public override string ToString()
+        {
+            return "Name der Elektrofahrradkategorie: " + CategoryName + ", Leihgebühr pro Woche: " + WeeklyFee + ", Leihgebühr pro Tag: " + DailyFee + ", Maximale Geschwindigkeit: " + MaxSpeed;
+        }
     }
 
-    public class EBike : EBikeCategory
+    public class EBike
     {
-        private string Model { get; set; }
+        public string Model { get; set; }
 
-        private string Manufacturer { get; set; }
+        public string Manufacturer { get; set; }
 
-        private int PS { get; set; }
+        public int Power { get; set; }
 
+        public override string ToString()
+        {
+            return "Hersteller: " + Manufacturer + ", Modell: " + Model + ", PS: " + Power;
+        }
 
+        public EBike() { }
+
+        public EBike(string model, string manufacturer, int power)
+        {
+            Model = model;
+            Manufacturer = manufacturer;
+            Power = power;
+        }
     }
 
 }
