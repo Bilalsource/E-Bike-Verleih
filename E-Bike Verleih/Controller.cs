@@ -3,11 +3,8 @@ using E_Bike_Verleih.XMLSerializer;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Serialization;
+
 
 namespace E_Bike_Verleih
 {
@@ -299,53 +296,66 @@ namespace E_Bike_Verleih
         
         public static void OrderMenu()
         {
-         
-            Console.WriteLine("Sie haben folgende Befehle zur Auswahl:\n" +
-                "   1. Buchung anlegen\n" +
-                "   2. Buchung bearbeiten\n" +
-                "   3. Buchung löschen\n" +
-                "   4. Alle Buchungen ausgeben\n" +
-                "   5. Zurück ins Startmenü\n");
-            int number = Convert.ToInt32(Console.ReadLine());
-
-            DataList CustomerList = new DataList();
-            List<Customer> ListOfCustomers = CustomerList.ImportCustomersFromXml();
-            
-            ShowCustomerInfo(ListOfCustomers);
-
-            DataList EBikeCategoryList = new DataList();
-            List<EBikeCategory> ListOfEBikeCategories = EBikeCategoryList.ImportEBikeCategoriesFromXml();
-            ShowEBikeCategoryInfo(ListOfEBikeCategories);
-
-            DataList OrderList = new DataList();
-            List<Order> ListOfOrders = OrderList.ImportOrdersFromXml();
-
-
-            switch (number)
+            try
             {
-                case 1:
-                    CreateOrder(OrderList, ListOfCustomers, ListOfEBikeCategories);
-                    break;
-                case 2:
-                    EditOrder(OrderList);
-                    break;
-                case 3:
-                    DeleteOrder(OrderList);
-                    break;
-                case 4:
-                    ShowOrderInfo(ListOfOrders);
-                    break;
-                case 5:
-                    Console.Clear();
-                    StartMenu();
-                    break;
-                default:
-                    Console.Clear();
-                    Console.WriteLine("Ungültige Eingabe, versuchen Sie es nochmal!\n");
-                    OrderMenu();
-                    break;
+                Console.WriteLine("Sie haben folgende Befehle zur Auswahl:\n" +
+                    "   1. Buchung anlegen\n" +
+                    "   2. Buchung bearbeiten\n" +
+                    "   3. Buchung löschen\n" +
+                    "   4. Alle Buchungen ausgeben\n" +
+                    "   5. Zurück ins Startmenü\n");
+                int number = Convert.ToInt32(Console.ReadLine());
+
+                DataList CustomerList = new DataList();
+                List<Customer> ListOfCustomers = CustomerList.ImportCustomersFromXml();
+
+                ShowCustomerInfo(ListOfCustomers);
+
+                DataList EBikeCategoryList = new DataList();
+                List<EBikeCategory> ListOfEBikeCategories = EBikeCategoryList.ImportEBikeCategoriesFromXml();
+                ShowEBikeCategoryInfo(ListOfEBikeCategories);
+
+                DataList OrderList = new DataList();
+                List<Order> ListOfOrders = OrderList.ImportOrdersFromXml();
+
+
+                switch (number)
+                {
+                    case 1:
+                        CreateOrder(OrderList, ListOfCustomers, ListOfEBikeCategories);
+                        break;
+                    case 2:
+                        EditOrder(OrderList, ListOfCustomers, ListOfEBikeCategories);
+                        break;
+                    case 3:
+                        DeleteOrder(OrderList);
+                        break;
+                    case 4:
+                        ShowOrderInfo(ListOfOrders);
+                        break;
+                    case 5:
+                        Console.Clear();
+                        StartMenu();
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Ungültige Eingabe, versuchen Sie es nochmal!\n");
+                        OrderMenu();
+                        break;
+                }
             }
-            OrderMenu();
+            catch (ArgumentException e)
+            {
+                Console.WriteLine("Sie haben eine falsche Eingabe getätigt\n" + e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\n\n" + e.StackTrace);
+            }
+            finally
+            {
+                OrderMenu();
+            }
         }
 
         private static void CreateOrder(DataList orderList, List<Customer> listOfCustomers, List<EBikeCategory> listOfEBikeCategories)
@@ -421,7 +431,7 @@ namespace E_Bike_Verleih
             }
         }
 
-        private static void EditOrder(DataList orderList)
+        private static void EditOrder(DataList orderList, List<Customer> listOfCustomers, List<EBikeCategory> listOfEBikeCategories)
         {
             Console.WriteLine("Geben Sie den Index der Buchung an, die Sie bearbeiten wollen");
 
@@ -434,19 +444,43 @@ namespace E_Bike_Verleih
                 "4. EndDatum\n");
           
             int numberAttribute = Convert.ToInt32(Console.ReadLine());
+            var cultureInfo = new CultureInfo("de-DE");
+
 
             switch (numberAttribute)
             {
                 case 1:
                     Console.WriteLine("Geben Sie den Index es Kunden an dem Sie die Buchung nun zuordnen wollen");
                     int indexcustomer = Convert.ToInt32(Console.ReadLine());
-
+                    orderList.ReplaceCustomerOfOrder(numberOrder,listOfCustomers[indexcustomer]);
+                    orderList.ExportOrderListToXml();
                     break;
                 case 2:
+                    Customer customer = orderList.ImportOrdersFromXml()[numberOrder].Customer;
+                    Console.WriteLine("Wählen Sie nun die Index-Nummer der Elektrofahrradkategorie, für die eine Buchung angelegt werden soll, aus");
+                    int eBikeCategoryNumber = Convert.ToInt32(Console.ReadLine());
+                    EBikeCategory eBikeCategory = listOfEBikeCategories[eBikeCategoryNumber];
+
+                    ValidateOrder(customer, eBikeCategory);
+
+                    Console.WriteLine("Wählen Sie nun die Index-Nummer des Elektrofahrrads, für das eine Buchung angelegt werden soll, aus");
+                    int eBikeNumber = Convert.ToInt32(Console.ReadLine());
+                    EBike eBike = eBikeCategory.EBikes[eBikeNumber];
+
+                    orderList.ReplaceEBikeAndCategoryOfOrder(numberOrder, eBikeCategory, eBike);
+                    orderList.ExportCustomerListToXml();
                     break;
                 case 3:
+                    Console.WriteLine("Geben Sie das neue Beginndatum an");
+                    DateTime begindate = DateTime.Parse(Console.ReadLine(), cultureInfo,DateTimeStyles.NoCurrentDateDefault);
+                    orderList.ChangeDateOfOrder(numberOrder, begindate, 0);
+                    orderList.ExportOrderListToXml();
                     break;
                 case 4:
+                    Console.WriteLine("Geben Sie das neue Beginndatum an");
+                    DateTime endDate = DateTime.Parse(Console.ReadLine(), cultureInfo, DateTimeStyles.NoCurrentDateDefault);
+                    orderList.ChangeDateOfOrder(numberOrder, endDate, 1);
+                    orderList.ExportOrderListToXml();
                     break;
             }
         }
@@ -457,7 +491,7 @@ namespace E_Bike_Verleih
             try
             {
                 int number = Convert.ToInt32(Console.ReadLine());
-                orderList.removeOrderWithIndex(number);
+                orderList.RemoveOrderWithIndex(number);
                 orderList.ExportOrderListToXml();
 
             }

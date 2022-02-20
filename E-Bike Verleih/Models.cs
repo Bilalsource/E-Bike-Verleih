@@ -115,10 +115,19 @@ namespace E_Bike_Verleih.Models
 
         public override string ToString()
         {
+            string amlicense = "";
+            if(Customer.AMLicense == true)
+            {
+                amlicense = "vorhanden";
+            }
+            else
+            {
+                amlicense = "nicht vorhanden";
+            }
             return "Kunde:\n" +
                 "   Vorname: " + Customer.FirstName + "\n" +
                 "   Nachname: " + Customer.LastName + "\n" +
-                "   AM-Führerschein: " + Customer.AMLicense + "\n" +
+                "   AM-Führerschein: " + amlicense + "\n" +
                 "   Mobilfunknummer: " + Customer.Number + "\n" +
                 "   Zahlweise: " + Customer.IBAN + "\n" +
                 "   Adresse: " + Customer.City +", " + Customer.PostalCode + ", " + Customer.Street + ", " + Customer.HouseNumber + "\n" +

@@ -71,4 +71,37 @@
     <BeginDate>2022-02-12T00:00:00</BeginDate>
     <EndDate>2022-02-19T00:00:00</EndDate>
   </Order>
+  <Order>
+    <Customer>
+      <FirstName>Bilal</FirstName>
+      <LastName>El-Awad</LastName>
+      <AMLicense>true</AMLicense>
+      <Number>017693209151</Number>
+      <IBAN>DE89 3704 0044 0532 0130 01</IBAN>
+      <City>Velbert Langenber</City>
+      <Street>Kamper Straße</Street>
+      <HouseNumber>20</HouseNumber>
+      <PostalCode>42555</PostalCode>
+    </Customer>
+    <EBikeCategory>
+      <CategoryName>Lastenräder</CategoryName>
+      <WeeklyFee>25</WeeklyFee>
+      <DailyFee>5</DailyFee>
+      <MaxSpeed>24</MaxSpeed>
+      <EBikes>
+        <EBike>
+          <Model>Superb</Model>
+          <Manufacturer>King Size</Manufacturer>
+          <Power>20</Power>
+        </EBike>
+      </EBikes>
+    </EBikeCategory>
+    <EBike>
+      <Model>Superb</Model>
+      <Manufacturer>King Size</Manufacturer>
+      <Power>20</Power>
+    </EBike>
+    <BeginDate>2022-02-20T00:00:00</BeginDate>
+    <EndDate>2022-02-24T00:00:00</EndDate>
+  </Order>
 </ArrayOfOrder>
