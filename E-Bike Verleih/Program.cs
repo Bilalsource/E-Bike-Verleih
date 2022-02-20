@@ -9,7 +9,9 @@ namespace E_Bike_Verleih
     {
         static void Main(string[] args)
         {
-           StartMenu();
+            Console.SetWindowSize(Console.LargestWindowWidth-15,Console.LargestWindowHeight-15);
+            
+            StartMenu();
         }
     } 
 }

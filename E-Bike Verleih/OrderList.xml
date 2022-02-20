@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Order>
+    <Customer>
+      <FirstName>Bilal</FirstName>
+      <LastName>El-Awad</LastName>
+      <AMLicense>true</AMLicense>
+      <Number>017693209151</Number>
+      <IBAN>DE89 3704 0044 0532 0130 01</IBAN>
+      <City>Velbert Langenber</City>
+      <Street>Kamper Straße</Street>
+      <HouseNumber>20</HouseNumber>
+      <PostalCode>42555</PostalCode>
+    </Customer>
+    <EBikeCategory>
+      <CategoryName>Geile Räder</CategoryName>
+      <WeeklyFee>20</WeeklyFee>
+      <DailyFee>25</DailyFee>
+      <MaxSpeed>26</MaxSpeed>
+      <EBikes>
+        <EBike>
+          <Model>XxXxTreme</Model>
+          <Manufacturer>Toyota</Manufacturer>
+          <Power>500</Power>
+        </EBike>
+        <EBike>
+          <Model>187</Model>
+          <Manufacturer>Mitsubishi</Manufacturer>
+          <Power>500</Power>
+        </EBike>
+      </EBikes>
+    </EBikeCategory>
+    <EBike>
+      <Model>187</Model>
+      <Manufacturer>Mitsubishi</Manufacturer>
+      <Power>500</Power>
+    </EBike>
+    <BeginDate>2001-01-11T00:00:00</BeginDate>
+    <EndDate>2002-02-11T00:00:00</EndDate>
+  </Order>
+  <Order>
+    <Customer>
+      <FirstName>Justin</FirstName>
+      <LastName>Evangelou</LastName>
+      <AMLicense>false</AMLicense>
+      <Number>0114101511</Number>
+      <IBAN>Barzahlung</IBAN>
+      <City>Velbert Langenberg</City>
+      <Street>Kamper Straße</Street>
+      <HouseNumber>20</HouseNumber>
+      <PostalCode>42555</PostalCode>
+    </Customer>
+    <EBikeCategory>
+      <CategoryName>Lastenräder</CategoryName>
+      <WeeklyFee>25</WeeklyFee>
+      <DailyFee>5</DailyFee>
+      <MaxSpeed>24</MaxSpeed>
+      <EBikes>
+        <EBike>
+          <Model>supperrrrr</Model>
+          <Manufacturer>Kin Size</Manufacturer>
+          <Power>20</Power>
+        </EBike>
+      </EBikes>
+    </EBikeCategory>
+    <EBike>
+      <Model>supperrrrr</Model>
+      <Manufacturer>Kin Size</Manufacturer>
+      <Power>20</Power>
+    </EBike>
+    <BeginDate>2022-02-12T00:00:00</BeginDate>
+    <EndDate>2022-02-19T00:00:00</EndDate>
+  </Order>
+</ArrayOfOrder>

@@ -32,12 +32,13 @@ namespace E_Bike_Verleih.Models
      
         public Customer() { }
 
-        public Customer(string firstName, string lastName, string number, bool amLicense, string city, string street, string houseNumber, string postalCode)
+        public Customer(string firstName, string lastName, string number, string iban, bool amLicense, string city, string street, string houseNumber, string postalCode)
         {
             FirstName = firstName;
             LastName = lastName;
             AMLicense = amLicense;
             Number = number;
+            IBAN = iban;
             City = city;
             Street = street;
             HouseNumber = houseNumber;
@@ -50,11 +51,11 @@ namespace E_Bike_Verleih.Models
         {
             if (AMLicense == true)
             {
-                return "Nachname:"+ LastName+", Vorname: "+FirstName+", AM-Führerschein: Vorhanden, "+"Stadt: "+City+", Postleitzahl: "+PostalCode+" , Strasse: "+Street+", Nr. "+HouseNumber+" ";
+                return "Nachname:"+ LastName+", Vorname: "+FirstName+", AM-Führerschein: Vorhanden, Mobilfunknummer:"+ Number +", Zahlweise: " + IBAN + ", Adresse: " + City + ", " + PostalCode + ", " + Street + ", " + HouseNumber + " ";
             }
             else
             {
-                return "Nachname:" + LastName + ", Vorname: " + FirstName + ", AM-Führerschein: Nicht vorhanden, " + "Stadt: " + City + ", Postleitzahl: " + PostalCode + " , Strasse: " + Street + ", Nr. " + HouseNumber + " ";
+                return "Nachname:" + LastName + ", Vorname: " + FirstName + ", AM-Führerschein: Nicht Vorhanden, Mobilfunknummer:" + Number + ", Zahlweise: " + IBAN + ", Adresse: " + City + ", " + PostalCode + ", " + Street + ", " + HouseNumber+" ";
             }
         }
     }
@@ -109,9 +110,31 @@ namespace E_Bike_Verleih.Models
             EBike = eBike;
             BeginDate = beginDate;
             EndDate = endDate;
+            
         }
 
-        public override string ToString() => "$Vorname des Kunden: {Customer.Firstname}, Nachname des Kunden des Kunden: {Customer.Lastname}, Beginndatum: {BeginDate}, Enddatum: {EndDate}";
+        public override string ToString()
+        {
+            return "Kunde:\n" +
+                "   Vorname: " + Customer.FirstName + "\n" +
+                "   Nachname: " + Customer.LastName + "\n" +
+                "   AM-Führerschein: " + Customer.AMLicense + "\n" +
+                "   Mobilfunknummer: " + Customer.Number + "\n" +
+                "   Zahlweise: " + Customer.IBAN + "\n" +
+                "   Adresse: " + Customer.City +", " + Customer.PostalCode + ", " + Customer.Street + ", " + Customer.HouseNumber + "\n" +
+                "Elektrofahrradkategorie:\n" + 
+                "   Name: " + EBikeCategory.CategoryName + "\n" +
+                "   Leihgebühr pro Tag: "+ EBikeCategory.DailyFee + " euro\n" +
+                "   Leihgebühr pro Woche: "+ EBikeCategory.WeeklyFee + " euro\n" +
+                "   Maximale Geschwindigkeit: " + EBikeCategory.MaxSpeed + "KM/H\n" +
+                "Elektrofahrrad:\n" +
+                "   Hersteller: " + EBike.Manufacturer + "\n" +
+                "   Modell:" + EBike.Model + "\n" +
+                "   Leistung: " + EBike.Power + "\n" +
+                "Beginndatum der Buchung: " + BeginDate.ToString("d") + "\n" +
+                "Enddatum der Buchung: " + EndDate.ToString("d") + "\n" +
+                "Gesamtbetrag: " + TotalValue + " euro";
+        }
 
     }
 
@@ -131,16 +154,16 @@ namespace E_Bike_Verleih.Models
         public EBikeCategory() { }
         public EBikeCategory(string categoryname, decimal weeklyFee, decimal dailyFee, int maxSpeed)
         {
-            EBikes = new List<EBike>();
             CategoryName = categoryname;
             WeeklyFee = weeklyFee;
             DailyFee = dailyFee;
             MaxSpeed = maxSpeed;
+            EBikes = new List<EBike>();
         } 
 
         public override string ToString()
         {
-            return "Name der Elektrofahrradkategorie: " + CategoryName + ", Leihgebühr pro Woche: " + WeeklyFee + ", Leihgebühr pro Tag: " + DailyFee + ", Maximale Geschwindigkeit: " + MaxSpeed;
+            return "Name der Elektrofahrradkategorie: " + CategoryName + ", Leihgebühr pro Woche: " + WeeklyFee + " euro" + ", Leihgebühr pro Tag: " + DailyFee + " euro" + ", Maximale Geschwindigkeit: " + MaxSpeed + "KM/H";
         }
     }
 
