@@ -126,7 +126,7 @@ namespace E_Bike_Verleih
                 string LastName = Console.ReadLine();
                 Console.WriteLine("Vorname:");
                 string FirstName = Console.ReadLine();
-                Console.WriteLine("Besitzt der Kunde einen AM-Führerschein?");
+                Console.WriteLine("Besitzt der Kunde einen AM-Führerschein?[ja/nein]");
                 string License = Console.ReadLine();
                 bool AMLicense = false;
                 if (License.ToLower().Equals("ja"))
@@ -137,7 +137,7 @@ namespace E_Bike_Verleih
                 {
                     AMLicense = false;
                 }
-                string iban = validateIBAN();
+                string iban = ValidateIBAN();
                 Console.WriteLine("Nummer:");
                 string Number = Console.ReadLine();
                 Console.WriteLine("Ort:");
@@ -160,7 +160,7 @@ namespace E_Bike_Verleih
             catch (ArgumentException e)
             {
                 Console.WriteLine(e.StackTrace);
-                Console.WriteLine("Sie haben vermutlich eine fehlerhafte Eingabe getätigt. Beantworten Sie Fragen mit ja oder nein.");
+                Console.WriteLine("Sie haben eine fehlerhafte Eingabe getätigt. Beantworten Sie Fragen mit ja oder nein.");
             }
 
             finally
@@ -170,7 +170,7 @@ namespace E_Bike_Verleih
         }
 
         //Hilfsmethode die mit Hilfe eines RegEx die IBAN validiert
-        private static string validateIBAN()
+        private static string ValidateIBAN()
         {
             Console.WriteLine("Geben Sie die Zahlweise des Kunden an\n"
                 +"1. Barzahlung\n"
@@ -193,7 +193,7 @@ namespace E_Bike_Verleih
                 if (!regex.IsMatch(iban))
                 {
                     Console.WriteLine("Bitte geben Sie eine gültige IBAN an");
-                    validateIBAN();
+                    ValidateIBAN();
                 }
                 else
                 {
@@ -241,7 +241,7 @@ namespace E_Bike_Verleih
                         customerList.EditCustomerFromXML(numberCustomer, EditedCustomer, 2, ValueLastname);
                         break;
                     case 3:
-                        Console.WriteLine("Geben Sie an, ob " + EditedCustomer.ToString() + "einen AM-Führerschein besitzt");
+                        Console.WriteLine("Geben Sie an, ob " + EditedCustomer.ToString() + "einen AM-Führerschein besitzt[ja/nein]");
                         string ValueAMLicense = Console.ReadLine();
                         customerList.EditCustomerFromXML(numberCustomer, EditedCustomer, 3, ValueAMLicense);
                         break;
@@ -252,7 +252,7 @@ namespace E_Bike_Verleih
                         break;
                     case 5:
                         Console.WriteLine("Geben Sie die neue Zahlweise für " + EditedCustomer.ToString() + " ein");
-                        string ValueIBAN = validateIBAN();
+                        string ValueIBAN = ValidateIBAN();
                         customerList.EditCustomerFromXML(numberCustomer, EditedCustomer, 5, ValueIBAN);
                         break;
                     case 6:
@@ -400,11 +400,11 @@ namespace E_Bike_Verleih
 
                 var cultureInfo = new CultureInfo("de-DE");
 
-                Console.WriteLine("Geben sie nun das Beginndatum der Buchung an");
+                Console.WriteLine("Geben sie nun das Beginndatum der Buchung an [TT.MM.JJJJ]");
                 string dateString = Console.ReadLine();
                 DateTime beginDate = DateTime.Parse(dateString,cultureInfo, DateTimeStyles.NoCurrentDateDefault);
 
-                Console.WriteLine("Geben sie nun das Enddatum der Buchung an");
+                Console.WriteLine("Geben sie nun das Enddatum der Buchung an [TT.MM.JJJJ]");
                 string dateEndString = Console.ReadLine();
                 DateTime endDate = DateTime.Parse(dateEndString, cultureInfo, DateTimeStyles.NoCurrentDateDefault);
 
@@ -497,13 +497,13 @@ namespace E_Bike_Verleih
                     orderList.ExportCustomerListToXml();
                     break;
                 case 3:
-                    Console.WriteLine("Geben Sie das neue Beginndatum an");
+                    Console.WriteLine("Geben Sie das neue Beginndatum an [TT.MM.JJJJ]");
                     DateTime begindate = DateTime.Parse(Console.ReadLine(), cultureInfo,DateTimeStyles.NoCurrentDateDefault);
                     orderList.ChangeDateOfOrder(numberOrder, begindate, 0);
                     orderList.ExportOrderListToXml();
                     break;
                 case 4:
-                    Console.WriteLine("Geben Sie das neue Enddatum an");
+                    Console.WriteLine("Geben Sie das neue Enddatum an [TT.MM.JJJJ]");
                     DateTime endDate = DateTime.Parse(Console.ReadLine(), cultureInfo, DateTimeStyles.NoCurrentDateDefault);
                     orderList.ChangeDateOfOrder(numberOrder, endDate, 1);
                     orderList.ExportOrderListToXml();

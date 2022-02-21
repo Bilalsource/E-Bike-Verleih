@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -27,9 +28,9 @@ namespace E_Bike_Verleih.XMLSerializer
         public List<EBikeCategory> eBikeCategoryList;
 
         //Path zu den XML XML-Dateien
-        private readonly string customerListPath = "C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml";
-        private readonly string orderListPath = "C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\OrderList.xml";
-        private readonly string eBikeCategoryListPath = "C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml";
+        private readonly string customerListPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\CustomerList.xml";
+        private readonly string orderListPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\OrderList.xml";
+        private readonly string eBikeCategoryListPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\EBikeCategoryList.xml";
 
         public DataList()
         {
