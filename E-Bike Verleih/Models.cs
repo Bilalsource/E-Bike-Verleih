@@ -93,7 +93,7 @@ namespace E_Bike_Verleih.Models
                 }
                 else
                 {
-                    _TotalValue = (timeSpan.Days / 7) * this.EBikeCategory.WeeklyFee + timeSpan.TotalDays%7 * this.EBikeCategory.DailyFee;
+                    _TotalValue = (timeSpan.Days / 7) * this.EBikeCategory.WeeklyFee + Convert.ToDecimal(timeSpan.TotalDays%7) * this.EBikeCategory.DailyFee;
                 }
 
                 return _TotalValue;

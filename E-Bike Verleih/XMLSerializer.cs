@@ -12,6 +12,10 @@ namespace E_Bike_Verleih.XMLSerializer
     [XmlRoot("ArrayOfData")]
     public class DataList
     {
+        /*
+         Util-Klasse die die Serialisierung und Deserialisierung der Obejkte übernimmt
+         Dazu auch die drei Listen: customerList, orderList und eBikeCategorylist, die in dieser Klasse um Methoden ergänzt werden 
+        */
 
         [XmlArrayItem("Customer", typeof(Customer))]
         public List<Customer> customerList;
@@ -22,9 +26,10 @@ namespace E_Bike_Verleih.XMLSerializer
         [XmlArrayItem("EBikeCategory", typeof(EBikeCategory))]
         public List<EBikeCategory> eBikeCategoryList;
 
-        private readonly string customerListPath = "C:\\Users\\Bilal\\OneDrive\\Desktop\\Fortgeschrittene Programmierkonzepte\\E-Bike Verleih\\E-Bike Verleih\\CustomerList.xml";
-        private readonly string orderListPath = "C:\\Users\\Bilal\\OneDrive\\Desktop\\Fortgeschrittene Programmierkonzepte\\E-Bike Verleih\\E-Bike Verleih\\OrderList.xml";
-        private readonly string eBikeCategoryListPath = "C:\\Users\\Bilal\\OneDrive\\Desktop\\Fortgeschrittene Programmierkonzepte\\E-Bike Verleih\\E-Bike Verleih\\EBikeCategoryList.xml";
+        //Path zu den XML XML-Dateien
+        private readonly string customerListPath = "C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml";
+        private readonly string orderListPath = "C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\OrderList.xml";
+        private readonly string eBikeCategoryListPath = "C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml";
 
         public DataList()
         {
@@ -33,11 +38,13 @@ namespace E_Bike_Verleih.XMLSerializer
             eBikeCategoryList = new List<EBikeCategory>();
         }
 
+        //Methode zum Hinzufügen von Kunden
         public void AddCustomer(Customer customer)
         {
             customerList.Add(customer);
         }
 
+        //EBikeCategory und EBike Methoden, die Hinzufügen und löschen umfassen
         public void AddEBikeCategory(EBikeCategory eBikeCategory)
         {
             eBikeCategoryList.Add(eBikeCategory);
@@ -57,6 +64,7 @@ namespace E_Bike_Verleih.XMLSerializer
             eBikeCategoryList[indexCategory].EBikes.RemoveAt(indexEBike);
         }
 
+        //Order methoden die das hinzufügen, löschen, ersetzen und bearbeiten von Buchungen ermöglichen
         public void AddOrder(Order order)
         {
             orderList.Add(order);
@@ -90,6 +98,7 @@ namespace E_Bike_Verleih.XMLSerializer
 
         }
 
+        //bearbeiten des Kunden 
         public void EditCustomerFromXML(int position, Customer customer, int positionAttribute, string value)
         {
             XmlDocument doc = new XmlDocument();
@@ -144,6 +153,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //löschen eines Kunden
         public void DeleteCustomerFromXML(int position)
         {
             XmlDocument doc = new XmlDocument();
@@ -157,6 +167,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //Kunden serialisieren
         public void ExportCustomerListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(customerList.GetType());
@@ -166,6 +177,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //Kunden deserialisieren
         public List<Customer> ImportCustomersFromXml()
         {
             try
@@ -184,6 +196,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //Elektrofahrradkategorie serialisieren
         public List<EBikeCategory> ImportEBikeCategoriesFromXml()
         {
             try
@@ -202,6 +215,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //Elektrofahrradkategorie deserialisieren
         public void ExportEBikeCategoryListToXml()
         {
             try
@@ -218,6 +232,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //löschen einer Elektrofahrradkategorie
         public void DeleteEBikeCategoryFromXML(int position)
         {
             XmlDocument doc = new XmlDocument();
@@ -231,6 +246,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //bearbeiten einer Elektrofahrradkategorie
         public void EditEBBikeCategoryFromXML(int numberEBikeCategory, int numberEBikeCategoryAttribute, string value)
         {
             XmlDocument doc = new XmlDocument();
@@ -263,47 +279,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
-        public void AddEBikeToCategory()
-        {
-            XmlSerializer serializer = new XmlSerializer(eBikeCategoryList.GetType());
-            using (TextWriter twr = new StreamWriter(eBikeCategoryListPath))
-            {
-                serializer.Serialize(twr, eBikeCategoryList);
-            }
-        }
-
-        public void EditEBikeInEBikeCategoryFromXML(int eBikeCategoryNumber, int eBikeNumber, int numberEBikeAttribute, string value)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(eBikeCategoryListPath);
-
-            if (eBikeCategoryNumber < doc.DocumentElement.ChildNodes.Count)
-            {
-                XmlNode node = doc.DocumentElement.ChildNodes[eBikeCategoryNumber];
-                if (eBikeNumber < node.ChildNodes.Count)
-                {
-                   
-                    switch (numberEBikeAttribute)
-                    {
-                        case 1:
-
-                            node.SelectSingleNode("/ArrayOfEBikeCategory/EBikeCategory/EBikes/EBike/Manufacturer").InnerText = value;
-                            break;
-                        case 2:
-                            node.SelectSingleNode("/ArrayOfEBikeCategory/EBikeCategory/EBikes/EBike/Model").InnerText = value;
-                            break;
-                        case 3:
-                            node.SelectSingleNode("/ArrayOfEBikeCategory/EBikeCategory/EBikes/EBike/Power").InnerText = value;
-                            break;
-                        default:
-
-                            break;
-                    }
-                }
-                doc.Save(eBikeCategoryListPath);
-            }
-        }
-
+        //serialisieren einer Buchung
         public void ExportOrderListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Order>));
@@ -313,6 +289,7 @@ namespace E_Bike_Verleih.XMLSerializer
             }
         }
 
+        //deserialisieren einer Buchung
         public List<Order> ImportOrdersFromXml()
         {
             try

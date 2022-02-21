@@ -2,13 +2,51 @@
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Order>
     <Customer>
+      <FirstName>Patrick</FirstName>
+      <LastName>Star</LastName>
+      <AMLicense>true</AMLicense>
+      <Number>0000000000000</Number>
+      <IBAN>Barzahlung</IBAN>
+      <City>Bikini Bottom</City>
+      <Street>Seetang Weg</Street>
+      <HouseNumber>3</HouseNumber>
+      <PostalCode>00000</PostalCode>
+    </Customer>
+    <EBikeCategory>
+      <CategoryName>Geile Räder</CategoryName>
+      <WeeklyFee>20</WeeklyFee>
+      <DailyFee>25</DailyFee>
+      <MaxSpeed>26</MaxSpeed>
+      <EBikes>
+        <EBike>
+          <Model>Xtremee</Model>
+          <Manufacturer>Toyota</Manufacturer>
+          <Power>500</Power>
+        </EBike>
+        <EBike>
+          <Model>SuperXtremeCycle</Model>
+          <Manufacturer>Japonya</Manufacturer>
+          <Power>35</Power>
+        </EBike>
+      </EBikes>
+    </EBikeCategory>
+    <EBike>
+      <Model>SuperXtremeCycle</Model>
+      <Manufacturer>Japonya</Manufacturer>
+      <Power>35</Power>
+    </EBike>
+    <BeginDate>2022-01-13T00:00:00</BeginDate>
+    <EndDate>2022-01-21T00:00:00</EndDate>
+  </Order>
+  <Order>
+    <Customer>
       <FirstName>Bilal</FirstName>
       <LastName>El-Awad</LastName>
       <AMLicense>true</AMLicense>
-      <Number>017693209151</Number>
+      <Number>141015112710</Number>
       <IBAN>DE89 3704 0044 0532 0130 01</IBAN>
-      <City>Velbert Langenber</City>
-      <Street>Kamper Straße</Street>
+      <City>Velbert</City>
+      <Street>Nierenhoferstraße</Street>
       <HouseNumber>20</HouseNumber>
       <PostalCode>42555</PostalCode>
     </Customer>
@@ -19,89 +57,23 @@
       <MaxSpeed>26</MaxSpeed>
       <EBikes>
         <EBike>
-          <Model>XxXxTreme</Model>
+          <Model>Xtremee</Model>
           <Manufacturer>Toyota</Manufacturer>
           <Power>500</Power>
         </EBike>
         <EBike>
-          <Model>187</Model>
-          <Manufacturer>Mitsubishi</Manufacturer>
-          <Power>500</Power>
+          <Model>SuperXtremeCycle</Model>
+          <Manufacturer>Japonya</Manufacturer>
+          <Power>35</Power>
         </EBike>
       </EBikes>
     </EBikeCategory>
     <EBike>
-      <Model>187</Model>
-      <Manufacturer>Mitsubishi</Manufacturer>
+      <Model>Xtremee</Model>
+      <Manufacturer>Toyota</Manufacturer>
       <Power>500</Power>
     </EBike>
-    <BeginDate>2001-01-11T00:00:00</BeginDate>
-    <EndDate>2002-02-11T00:00:00</EndDate>
-  </Order>
-  <Order>
-    <Customer>
-      <FirstName>Justin</FirstName>
-      <LastName>Evangelou</LastName>
-      <AMLicense>false</AMLicense>
-      <Number>0114101511</Number>
-      <IBAN>Barzahlung</IBAN>
-      <City>Velbert Langenberg</City>
-      <Street>Kamper Straße</Street>
-      <HouseNumber>20</HouseNumber>
-      <PostalCode>42555</PostalCode>
-    </Customer>
-    <EBikeCategory>
-      <CategoryName>Lastenräder</CategoryName>
-      <WeeklyFee>25</WeeklyFee>
-      <DailyFee>5</DailyFee>
-      <MaxSpeed>24</MaxSpeed>
-      <EBikes>
-        <EBike>
-          <Model>supperrrrr</Model>
-          <Manufacturer>Kin Size</Manufacturer>
-          <Power>20</Power>
-        </EBike>
-      </EBikes>
-    </EBikeCategory>
-    <EBike>
-      <Model>supperrrrr</Model>
-      <Manufacturer>Kin Size</Manufacturer>
-      <Power>20</Power>
-    </EBike>
-    <BeginDate>2022-02-12T00:00:00</BeginDate>
-    <EndDate>2022-02-19T00:00:00</EndDate>
-  </Order>
-  <Order>
-    <Customer>
-      <FirstName>Bilal</FirstName>
-      <LastName>El-Awad</LastName>
-      <AMLicense>true</AMLicense>
-      <Number>017693209151</Number>
-      <IBAN>DE89 3704 0044 0532 0130 01</IBAN>
-      <City>Velbert Langenber</City>
-      <Street>Kamper Straße</Street>
-      <HouseNumber>20</HouseNumber>
-      <PostalCode>42555</PostalCode>
-    </Customer>
-    <EBikeCategory>
-      <CategoryName>Lastenräder</CategoryName>
-      <WeeklyFee>25</WeeklyFee>
-      <DailyFee>5</DailyFee>
-      <MaxSpeed>24</MaxSpeed>
-      <EBikes>
-        <EBike>
-          <Model>Superb</Model>
-          <Manufacturer>King Size</Manufacturer>
-          <Power>20</Power>
-        </EBike>
-      </EBikes>
-    </EBikeCategory>
-    <EBike>
-      <Model>Superb</Model>
-      <Manufacturer>King Size</Manufacturer>
-      <Power>20</Power>
-    </EBike>
-    <BeginDate>2022-02-20T00:00:00</BeginDate>
-    <EndDate>2022-02-24T00:00:00</EndDate>
+    <BeginDate>2022-02-01T00:00:00</BeginDate>
+    <EndDate>2022-02-23T00:00:00</EndDate>
   </Order>
 </ArrayOfOrder>

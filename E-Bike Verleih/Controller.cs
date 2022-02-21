@@ -10,46 +10,60 @@ namespace E_Bike_Verleih
 {
     public class Controller : DataList
     {
+        // Hauptmenue des Controllers
          public static void StartMenu()
-        {
+         {
+             try { 
+                 Console.WriteLine("Willkommen im E-Bike Verleih-System,\n" +
+                            "\nSie navigieren mittels Eingabe der Zahlen folgender Befehle: \n" +
+                            "\n" +
+                            "   1. Kunden \n" +
+                            "   2. Buchungen \n" +
+                            "   3. E-Bikes und Kategorien \n" +
+                            "   4. Exit" +
+                            "\n");
 
-        Console.WriteLine("Willkommen im E-Bike Verleih-System,\n" +
-                "\nSie navigieren mittels Eingabe der Zahlen folgender Befehle: \n" +
-                "\n" +
-                "   1. Kunden \n" +
-                "   2. Buchungen \n" +
-                "   3. E-Bikes und Kategorien \n" +
-                "   4. Exit" +
-                "\n");
+                 int number = Convert.ToInt32(Console.ReadLine());
 
-            int number = Convert.ToInt32(Console.ReadLine());
-
-            switch (number)
-            {
-                case 1:
-                    Console.Clear();
-                    CustomerMenu();
+                 switch (number)
+                 {
+                    case 1:
+                       Console.Clear();
+                       CustomerMenu();
                     break;
-                case 2:
-                    Console.Clear();
-                    OrderMenu();
-                    break;
-                case 3:
-                    Console.Clear();
-                    EBikeMenu();
-                    break;
-                case 4:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.Clear();
-                    Console.WriteLine("Ungültige Eingabe, versuchen Sie es nochmal!\n");
-                    StartMenu();
-                    break;
-            }
+                    case 2:
+                       Console.Clear();
+                       OrderMenu();
+                       break;
+                    case 3:
+                       Console.Clear();
+                       EBikeMenu();
+                       break;
+                    case 4:
+                       Environment.Exit(0);
+                       break;
+                    default:
+                       Console.Clear();
+                       Console.WriteLine("Ungültige Eingabe, versuchen Sie es nochmal!\n");
+                       StartMenu();
+                       break;
+                 }
+             }
+             catch (ArgumentException e)
+             {
+                Console.WriteLine("Sie haben eine falsche Eingabe getätigt\n" + e.Message);
+             }
+             catch (Exception e)
+             {
+                Console.WriteLine(e.Message + "\n\n" + e.StackTrace);
+             }
+             finally
+             {
+                StartMenu();
+             }
         }
 
-
+        //Die Bedienung des Kundenmenues
         public static void CustomerMenu()
         {
             DataList CustomerList = new DataList();
@@ -74,7 +88,7 @@ namespace E_Bike_Verleih
                     EditCustomer(CustomerList);
                     break;
                 case 3:
-                    DeleteCustomer(CustomerList);            
+                    DeleteCustomer(CustomerList);
                     break;
                 case 4:
                     Console.Clear();
@@ -89,6 +103,7 @@ namespace E_Bike_Verleih
 
         }
 
+        //Gibt alle Kunden als Liste auf der Konsole aus
         private static void ShowCustomerInfo(List<Customer> ListOfCustomers)
         {
             Console.WriteLine("Liste aller Kunden: \n");
@@ -102,7 +117,7 @@ namespace E_Bike_Verleih
             }
         }
 
-        //TODO: IBAN Eingabe Prüfen
+        //Hinzufuegen eines Kunden
         private static void CreateCustomer(DataList customerList)
         {
             try
@@ -138,10 +153,11 @@ namespace E_Bike_Verleih
 
                 customerList.AddCustomer(NewCustomer);
                 customerList.ExportCustomerListToXml();
+                Console.Clear();
 
             }
 
-            catch(ArgumentException e)
+            catch (ArgumentException e)
             {
                 Console.WriteLine(e.StackTrace);
                 Console.WriteLine("Sie haben vermutlich eine fehlerhafte Eingabe getätigt. Beantworten Sie Fragen mit ja oder nein.");
@@ -153,6 +169,7 @@ namespace E_Bike_Verleih
             }
         }
 
+        //Hilfsmethode die mit Hilfe eines RegEx die IBAN validiert
         private static string validateIBAN()
         {
             Console.WriteLine("Geben Sie die Zahlweise des Kunden an\n"
@@ -186,6 +203,7 @@ namespace E_Bike_Verleih
             return result;
         }
 
+        //bearbeiten eines Kunden
         private static void EditCustomer(DataList customerList)
         {
             try
@@ -271,10 +289,12 @@ namespace E_Bike_Verleih
             }
             finally
             {
+                Console.Clear();
                 CustomerMenu();
             }
         }
 
+        //löschen eines Kunden
         private static void DeleteCustomer(DataList customerList)
         {
             Console.WriteLine("Geben Sie die Index-Nummer des Kunden an den Sie löschen wollen");
@@ -290,10 +310,12 @@ namespace E_Bike_Verleih
             }
             finally
             {
+                Console.Clear();
                 CustomerMenu();
             }
         }
         
+        //Buchungsmenue 
         public static void OrderMenu()
         {
             try
@@ -358,6 +380,7 @@ namespace E_Bike_Verleih
             }
         }
 
+        //Hinzufuegen einer Buchung
         private static void CreateOrder(DataList orderList, List<Customer> listOfCustomers, List<EBikeCategory> listOfEBikeCategories)
         {
             try
@@ -406,6 +429,7 @@ namespace E_Bike_Verleih
 
         }
 
+        //Diese Methode prüft, ob der angegebene Nutzer eine Elektrofahrrad aus einer bestimmten Kategorie ueberhaupt buchen darf
         private static void ValidateOrder(Customer customer, EBikeCategory eBikeCategory)
         {
             if (customer.AMLicense == false && eBikeCategory.MaxSpeed > 25)
@@ -417,6 +441,7 @@ namespace E_Bike_Verleih
             }
         }
 
+        //Gibt alle Buchungen als Liste auf der Konsole aus
         private static void ShowOrderInfo(List<Order> ListOfOrders)
         {
             Console.Clear();
@@ -431,6 +456,7 @@ namespace E_Bike_Verleih
             }
         }
 
+        //bearbeiten einer Buchung
         private static void EditOrder(DataList orderList, List<Customer> listOfCustomers, List<EBikeCategory> listOfEBikeCategories)
         {
             Console.WriteLine("Geben Sie den Index der Buchung an, die Sie bearbeiten wollen");
@@ -477,7 +503,7 @@ namespace E_Bike_Verleih
                     orderList.ExportOrderListToXml();
                     break;
                 case 4:
-                    Console.WriteLine("Geben Sie das neue Beginndatum an");
+                    Console.WriteLine("Geben Sie das neue Enddatum an");
                     DateTime endDate = DateTime.Parse(Console.ReadLine(), cultureInfo, DateTimeStyles.NoCurrentDateDefault);
                     orderList.ChangeDateOfOrder(numberOrder, endDate, 1);
                     orderList.ExportOrderListToXml();
@@ -485,6 +511,7 @@ namespace E_Bike_Verleih
             }
         }
 
+        //löschen einer Buchung
         private static void DeleteOrder(DataList orderList)
         {
             Console.WriteLine("Geben Sie die Index-Nummer der Buchung an die Sie löschen wollen");
@@ -506,6 +533,7 @@ namespace E_Bike_Verleih
             }
         }
 
+        //Menue der Elektrofahrraeder und ihrer Kategorien
         public static void EBikeMenu()
         {
             Console.WriteLine("Sie haben folgende Befehle zur Auswahl:\n" +
@@ -558,6 +586,7 @@ namespace E_Bike_Verleih
             EBikeMenu();
         }
 
+        //Gibt alle Elektrofahrraeder und deren Kategorien als Liste auf der Konsole aus
         private static void ShowEBikeCategoryInfo(List<EBikeCategory> ListOfEBikeCategories)
         {
             Console.WriteLine("\nListe aller E-Bike Kategorien: ");
@@ -580,6 +609,7 @@ namespace E_Bike_Verleih
             }
         }
 
+        //Hinzufuegen einer Elektrofahrradkategorie
         private static void CreateEBikeCategory(DataList eBikeCategoryList)
         {
             Console.WriteLine("Name der Kategorie:");
@@ -601,6 +631,7 @@ namespace E_Bike_Verleih
 
         }
 
+        //bearebeiten einer Elektrofahrradkategorie
         private static void EditEBikeCategory(DataList eBikeCategoryList)
         {
             try
@@ -658,6 +689,7 @@ namespace E_Bike_Verleih
             Console.Clear();
         }
 
+        //loeschen einer Elektrofahrradkategorie
         private static void DeleteEBikeCategory(DataList eBikeCategoryList)
         {
             Console.WriteLine("Geben Sie die Index-Nummer der Elektrofahrradkategorie die Sie löschen wollen");
@@ -675,6 +707,7 @@ namespace E_Bike_Verleih
 
         }
 
+        //Hinzufuegen eines Elektrofahrrads zu einer Elektrofahrradkategorie
         private static void AddEbikeToEBikeCategory(DataList eBikeCategoryList)
         {
             Console.WriteLine("Geben Sie die Index-Nummer der Elektrofahrradkategorie, in der Sie ein Elektrofahrrad anlegen wollen, an");
@@ -703,6 +736,7 @@ namespace E_Bike_Verleih
             Console.Clear();
         }
 
+        //bearbeiten eines Elektrofahrrads innerhalb einer Elektrofahrradkategorie
         private static void EditEbikeInEBikeCategory(DataList eBikeCategoryList)
         {
             Console.WriteLine("Geben Sie die Index-Nummer der Elektrofahrradkategorie, in der Sie ein Elektrofahrrad bearbeiten wollen, an");
@@ -757,6 +791,7 @@ namespace E_Bike_Verleih
             Console.Clear();
         }
 
+        //loeschen eines Elektrofahrrads innerhalb einer Elektrofahrradkategorie
         private static void DeleteEBikeInEBikeCategory(DataList eBikeCategoryList)
         {
             Console.WriteLine("Geben Sie die Index-Nummer der Elektrofahrradkategorie an aus der Sie ein Elektrofahrrad löschen wollen");

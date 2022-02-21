@@ -31,4 +31,17 @@
       </EBike>
     </EBikes>
   </EBikeCategory>
+  <EBikeCategory>
+    <CategoryName>Unterwasserräder</CategoryName>
+    <WeeklyFee>40</WeeklyFee>
+    <DailyFee>7</DailyFee>
+    <MaxSpeed>30</MaxSpeed>
+    <EBikes>
+      <EBike>
+        <Model>Unterwasser Treter</Model>
+        <Manufacturer>Sandy's Bikes</Manufacturer>
+        <Power>25</Power>
+      </EBike>
+    </EBikes>
+  </EBikeCategory>
 </ArrayOfEBikeCategory>
