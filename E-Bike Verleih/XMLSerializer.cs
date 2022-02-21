@@ -22,7 +22,9 @@ namespace E_Bike_Verleih.XMLSerializer
         [XmlArrayItem("EBikeCategory", typeof(EBikeCategory))]
         public List<EBikeCategory> eBikeCategoryList;
 
-        
+        private readonly string customerListPath = "C:\\Users\\Bilal\\OneDrive\\Desktop\\Fortgeschrittene Programmierkonzepte\\E-Bike Verleih\\E-Bike Verleih\\CustomerList.xml";
+        private readonly string orderListPath = "C:\\Users\\Bilal\\OneDrive\\Desktop\\Fortgeschrittene Programmierkonzepte\\E-Bike Verleih\\E-Bike Verleih\\OrderList.xml";
+        private readonly string eBikeCategoryListPath = "C:\\Users\\Bilal\\OneDrive\\Desktop\\Fortgeschrittene Programmierkonzepte\\E-Bike Verleih\\E-Bike Verleih\\EBikeCategoryList.xml";
 
         public DataList()
         {
@@ -50,26 +52,48 @@ namespace E_Bike_Verleih.XMLSerializer
         {
             eBikeCategoryList.RemoveAt(index);
         }
+        public void removeEBikeFromEBikeCateoryWithIndex(int indexCategory, int indexEBike)
+        {
+            eBikeCategoryList[indexCategory].EBikes.RemoveAt(indexEBike);
+        }
 
         public void AddOrder(Order order)
         {
             orderList.Add(order);
         }
 
-        public void removeOrderWithIndex(int index)
+        public void RemoveOrderWithIndex(int index)
         {
             orderList.RemoveAt(index);
         }
-
-        public void removeEBikeFromEBikeCateoryWithIndex(int indexCategory, int indexEBike)
+        public void ReplaceCustomerOfOrder(int indexOrder, Customer customer)
         {
-            eBikeCategoryList[indexCategory].EBikes.RemoveAt(indexEBike);
+            orderList[indexOrder].Customer = customer;
+        }
+
+        public void ChangeDateOfOrder(int indexOrder, DateTime dateTime, int endOrBeginDate)
+        {
+            if (endOrBeginDate==0)
+            {
+                orderList[indexOrder].BeginDate = dateTime;
+            }
+            else
+            {
+                orderList[indexOrder].EndDate = dateTime;
+            }
+        }
+
+        public void ReplaceEBikeAndCategoryOfOrder(int indexOrder, EBikeCategory eBikeCategory, EBike eBike)
+        {
+            orderList[indexOrder].EBikeCategory = eBikeCategory;
+            orderList[indexOrder].EBike = eBike;
+
         }
 
         public void EditCustomerFromXML(int position, Customer customer, int positionAttribute, string value)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml");
+            doc.Load(customerListPath);
 
             if (position < doc.DocumentElement.ChildNodes.Count)
             {
@@ -116,27 +140,27 @@ namespace E_Bike_Verleih.XMLSerializer
 
                         break;
                 }
-                doc.Save("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml");
+                doc.Save(customerListPath);
             }
         }
 
         public void DeleteCustomerFromXML(int position)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml");
+            doc.Load(customerListPath);
 
 
             if (position < doc.DocumentElement.ChildNodes.Count)
             {
                 doc.DocumentElement.RemoveChild(doc.DocumentElement.ChildNodes[position]);
-                doc.Save("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml");
+                doc.Save(customerListPath);
             }
         }
 
         public void ExportCustomerListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(customerList.GetType());
-            using (TextWriter twr = new StreamWriter("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml"))
+            using (TextWriter twr = new StreamWriter(customerListPath))
             {
                 serializer.Serialize(twr, customerList);
             }
@@ -147,7 +171,7 @@ namespace E_Bike_Verleih.XMLSerializer
             try
             {
                 XmlSerializer serializer = new XmlSerializer(customerList.GetType());
-                using (TextReader tr = new StreamReader("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\CustomerList.xml"))
+                using (TextReader tr = new StreamReader(customerListPath))
                 {
                     customerList = (List<Customer>)serializer.Deserialize(tr);
                 }
@@ -165,7 +189,7 @@ namespace E_Bike_Verleih.XMLSerializer
             try
             {
                 XmlSerializer serializer = new XmlSerializer(eBikeCategoryList.GetType());
-                using (TextReader tr = new StreamReader("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml"))
+                using (TextReader tr = new StreamReader(eBikeCategoryListPath))
                 {
                     eBikeCategoryList = (List<EBikeCategory>)serializer.Deserialize(tr);
                 }
@@ -183,7 +207,7 @@ namespace E_Bike_Verleih.XMLSerializer
             try
             {
                 XmlSerializer serializer = new XmlSerializer(eBikeCategoryList.GetType());
-                using (TextWriter twr = new StreamWriter("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml"))
+                using (TextWriter twr = new StreamWriter(eBikeCategoryListPath))
                 {
                     serializer.Serialize(twr, eBikeCategoryList);
                 }
@@ -197,20 +221,20 @@ namespace E_Bike_Verleih.XMLSerializer
         public void DeleteEBikeCategoryFromXML(int position)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml");
+            doc.Load(eBikeCategoryListPath);
 
 
             if (position < doc.DocumentElement.ChildNodes.Count)
             {
                 doc.DocumentElement.RemoveChild(doc.DocumentElement.ChildNodes[position]);
-                doc.Save("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml");
+                doc.Save(eBikeCategoryListPath);
             }
         }
 
         public void EditEBBikeCategoryFromXML(int numberEBikeCategory, int numberEBikeCategoryAttribute, string value)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml");
+            doc.Load(eBikeCategoryListPath);
 
             if (numberEBikeCategory < doc.DocumentElement.ChildNodes.Count)
             {
@@ -235,14 +259,14 @@ namespace E_Bike_Verleih.XMLSerializer
 
                         break;
                 }
-                doc.Save("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml");
+                doc.Save(eBikeCategoryListPath);
             }
         }
 
         public void AddEBikeToCategory()
         {
             XmlSerializer serializer = new XmlSerializer(eBikeCategoryList.GetType());
-            using (TextWriter twr = new StreamWriter("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml"))
+            using (TextWriter twr = new StreamWriter(eBikeCategoryListPath))
             {
                 serializer.Serialize(twr, eBikeCategoryList);
             }
@@ -251,7 +275,7 @@ namespace E_Bike_Verleih.XMLSerializer
         public void EditEBikeInEBikeCategoryFromXML(int eBikeCategoryNumber, int eBikeNumber, int numberEBikeAttribute, string value)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml");
+            doc.Load(eBikeCategoryListPath);
 
             if (eBikeCategoryNumber < doc.DocumentElement.ChildNodes.Count)
             {
@@ -276,14 +300,14 @@ namespace E_Bike_Verleih.XMLSerializer
                             break;
                     }
                 }
-                doc.Save("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\EBikeCategoryList.xml");
+                doc.Save(eBikeCategoryListPath);
             }
         }
 
         public void ExportOrderListToXml()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Order>));
-            using (TextWriter twr = new StreamWriter("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\OrderList.xml"))
+            using (TextWriter twr = new StreamWriter(orderListPath))
             {
                 serializer.Serialize(twr, orderList);
             }
@@ -294,7 +318,7 @@ namespace E_Bike_Verleih.XMLSerializer
             try
             {
                 XmlSerializer serializer = new XmlSerializer(orderList.GetType());
-                using (TextReader tr = new StreamReader("C:\\Users\\Bilal\\Source\\Repos\\Bilalsource\\E-Bike-Verleih\\E-Bike Verleih\\OrderList.xml"))
+                using (TextReader tr = new StreamReader(orderListPath))
                 {
                     orderList = (List<Order>)serializer.Deserialize(tr);
                 }
