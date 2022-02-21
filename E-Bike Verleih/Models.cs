@@ -11,7 +11,7 @@ namespace E_Bike_Verleih.Models
             • FirstName vom Typ string
             • LastName vom Typ string
             • AMLicense vom Typ bool 
-            • IBAN vom Typ string
+            • IBAN vom Typ string (steht für International Bank Account Number, der gleiche String wird aber auch genutzt falls bar gezahlt wird)
             • Number vom Typ string
             • City vom Typ string
             • Street vom Typ string
@@ -23,7 +23,6 @@ namespace E_Bike_Verleih.Models
         public string LastName { get; set; }
         public bool AMLicense { get; set; }
         public string Number { get; set; }
-        // International Bank Account Number
         public string IBAN { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
@@ -71,7 +70,8 @@ namespace E_Bike_Verleih.Models
             • BeginDate vom Typ DateTime 
             • EndDate vom Typ DateTime
             • TotalValue vom Typ decimal
-                         
+                 
+        get Methode des Felds TotalValue berechnet gesamt Preis der Buchung abghängig vom der Dauer der Buchung 
         */
 
         public Customer Customer { get; set; }
@@ -93,7 +93,7 @@ namespace E_Bike_Verleih.Models
                 }
                 else
                 {
-                    _TotalValue = timeSpan.Days * this.EBikeCategory.DailyFee;
+                    _TotalValue = (timeSpan.Days / 7) * this.EBikeCategory.WeeklyFee + timeSpan.TotalDays%7 * this.EBikeCategory.DailyFee;
                 }
 
                 return _TotalValue;
@@ -138,7 +138,16 @@ namespace E_Bike_Verleih.Models
 
     }
 
-
+    /*
+        Die Klasse EBikeCategory enthält die folgenden Properties
+          
+            • CategoryName vom Typ string
+            • WeeklyFee vom Typ decimal
+            • DailyFee vom Typ decimal
+            • MaxSpeed vom Typ int 
+            • EBikes vom Typ List<EBike>
+                 
+    */
     public class EBikeCategory
     {
         public string CategoryName { get; set; }
@@ -152,6 +161,7 @@ namespace E_Bike_Verleih.Models
         public List<EBike> EBikes { get; set; }
 
         public EBikeCategory() { }
+
         public EBikeCategory(string categoryname, decimal weeklyFee, decimal dailyFee, int maxSpeed)
         {
             CategoryName = categoryname;
@@ -167,6 +177,14 @@ namespace E_Bike_Verleih.Models
         }
     }
 
+    /*
+        Die Klasse EBikeCategory enthält die folgenden Properties
+          
+            • Model vom Typ string
+            • Manufacturer vom Typ string
+            • Power vom Typ int (Power repräsentiert Leistung)
+                 
+    */
     public class EBike
     {
         public string Model { get; set; }
